@@ -1,0 +1,168 @@
+$mobile: 327px;
+$tablet: 744px;
+$desktop: 1128px;
+
+$custom-sizes: (
+  'xlarge': 24px,
+  'large': 18px,
+  'mideum': 14px,
+  'small': 12px,
+  'xsmall': 10px,
+);
+$custom-color: (
+  'primary': #064a69,
+  'secondary': #5b4239,
+  'gray': #beb1b1,
+  'default': #918b8b,
+  'inverse': #ffffff,
+  'error': #e67776,
+);
+$custom-fontWeight: (
+  'bold': bold,
+  'normal': normal,
+  'light': 300,
+);
+$custom-background: (
+  'primary': #03a9f4,
+  'secondary': #795548,
+  'gray': #cccccc,
+  'default': #999999,
+  'inverse': #000000,
+  'error': #e53935,
+);
+
+$customs: (
+  'custom-size': $custom-sizes,
+  'custom-color': $custom-color,
+  'custom-fontweight': $custom-fontWeight,
+  'custom-background': $custom-background,
+) !default;
+
+@each $custom_name, $custom in $customs {
+  @each $custom_type, $value in $custom {
+    @if $custom_name == 'custom-size' {
+      .#{$custom_type} {
+        font-size: $value !important;
+      }
+      .#{$custom_type}-lineheight {
+        line-height: $value !important;
+      }
+    } @else if $custom_name == 'custom-color' {
+      .#{$custom_type} {
+        color: $value !important;
+      }
+    } @else if $custom_name == 'custom-fontweight' {
+      .#{$custom_type} {
+        font-weight: $value !important;
+      }
+    } @else if $custom_name == 'custom-background' {
+      .#{$custom_type}-background {
+        background-color: $value !important;
+      }
+    }
+  }
+}
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+}
+
+.checkbox label {
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 16px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 16px;
+  border: 1px solid #e53935;
+}
+.checkbox label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: '';
+  height: 6px;
+  left: 3px;
+  opacity: 0;
+  position: absolute;
+  top: 3px;
+  transform: rotate(-45deg);
+  width: 8px;
+}
+.checkbox input[type='checkbox'] {
+  visibility: visible;
+}
+.checkbox input[type='checkbox']:checked + label {
+  background-color: #e53935;
+  border-color: #e53935;
+}
+.checkbox input[type='checkbox']:checked + label:after {
+  opacity: 1;
+}
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  position: relative;
+  width: 100px;
+}
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+  stroke: #33a9ff;
+}
+.custom-overlay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+//브러우저 크기가 $mobile 이하일때
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+//mobile 이상 tablet 이하
+@mixin tablet {
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    @content;
+  }
+}
+// desktop이상
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
